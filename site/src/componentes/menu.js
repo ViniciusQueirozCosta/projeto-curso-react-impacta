@@ -1,26 +1,26 @@
-import React, {useEffect, useState} from 'react';
-import {Link} from 'react-router-dom';
+import React, {useEffect, useState} from 'react'
+import {Link} from 'react-router-dom'
 
 
-import axios from 'axios';
+import axios from 'axios'
 
-const URL = 'http://localhost:3200/api/cursos';
+const URL = 'http://localhost:3200/api/cursos'
 
 
 
 export const Menu = props => {
-    const [cursos, setCursos] = useState([]);
+    const [cursos, setCursos] = useState([])
 
     useEffect(()=>{
         const getCursos = async _ => {
-            const result = await axios.get(URL);
+            const result = await axios.get(URL)
             if(result.data){
-                setCursos(result.data);
+                setCursos(result.data)
             }
         }
 
-        getCursos();
-    }, [setCursos]);
+        getCursos()
+    }, [setCursos])
 
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">

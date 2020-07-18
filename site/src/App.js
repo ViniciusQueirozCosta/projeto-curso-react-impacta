@@ -14,7 +14,7 @@ function App() {
       <Menu />
       <Rotas />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

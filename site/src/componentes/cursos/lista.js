@@ -1,6 +1,17 @@
-import React from 'react'
+import React, {useEffect} from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import {
+    getListaCursos,
+    excluirCurso
+} from '../../actions/curso'
 
-export const CursoListagem = props => {
+const CursoListagem = props => {
+    const {getListaCursos} = props
+
+    useEffect(() => {
+        getListaCursos()
+    }, [getListaCursos])
 
     const exibirLinhas = () => {
         //retorna a lista de props se existir
@@ -17,7 +28,7 @@ export const CursoListagem = props => {
                             <i className="fa fa-check"></i>
                         </button>
                         <button className="btn btn-danger"
-                            onClick={() => props.excluir(curso._id)}>
+                            onClick={() => props.excluirCurso(curso._id)}>
                             <i className="fa fa-trash-o"></i>
                         </button>
                     </td>
@@ -55,3 +66,16 @@ export const CursoListagem = props => {
         </div>
     )
 }
+
+const mapStoreToProps = store => ({
+    cursos: store.curso.cursos
+})
+
+const mapActionsToProps = dispatch => bindActionCreators({
+    getListaCursos,
+    excluirCurso
+}, dispatch)
+
+const conectado = connect(mapStoreToProps, mapActionsToProps)(CursoListagem)
+
+export { conectado as CursoListagem}

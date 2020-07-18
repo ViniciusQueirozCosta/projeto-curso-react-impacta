@@ -1,16 +1,27 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import {
+    setInputForms,
+    limpar,
+    salvarCurso
+} from '../../actions/curso'
 
-export const CursoFormulario = props => {
+const CursoFormulario = props => {
 
-    const {codigo, 
+    const {
+        _id,
+        codigo, 
         descricao,
         cargaHoraria,
         preco,
         categoria,
-        atualizaState,
-        salvar,
+
+        isAlteracao,
+    
+        setInputForms,
         limpar,
-        isAlteracao} = props
+        salvarCurso} = props
 
     return (
         <div className="border-right pl-3 pr-3">
@@ -25,7 +36,7 @@ export const CursoFormulario = props => {
                         <input type="number"
                             className="form-control" id="codigo"
                             value={codigo}
-                            onChange={atualizaState} />
+                            onChange={setInputForms} />
                     </div>
                 </div>
                 <div className="form-group row">
@@ -37,7 +48,7 @@ export const CursoFormulario = props => {
                         <input type="text"
                             className="form-control" id="descricao"
                             value={descricao}
-                            onChange={atualizaState} />
+                            onChange={setInputForms} />
                     </div>
                 </div>
                 <div className="form-group row">
@@ -48,7 +59,7 @@ export const CursoFormulario = props => {
                         <input type="number"
                             className="form-control" id="cargaHoraria"
                             value={cargaHoraria}
-                            onChange={atualizaState} />
+                            onChange={setInputForms} />
                     </div>
                 </div>
                 <div className="form-group row">
@@ -59,7 +70,7 @@ export const CursoFormulario = props => {
                         <input type="number"
                             className="form-control" id="preco"
                             value={preco}
-                            onChange={atualizaState} />
+                            onChange={setInputForms} />
                     </div>
                 </div>
                 <div className="form-group row">
@@ -68,7 +79,7 @@ export const CursoFormulario = props => {
                     <div className="col-sm-9">
                         <select className="form-control" id="categoria"
                             value={categoria}
-                            onChange={atualizaState} >
+                            onChange={setInputForms} >
                             <option>INFORMATICA</option>
                             <option>ENGENHARIA</option>
                             <option>ADMINISTRACAO</option>
@@ -78,7 +89,7 @@ export const CursoFormulario = props => {
                 </div>
                 <div className="form-group row">
                     <button className="btn btn-primary ml-3 mb-3"
-                        onClick={salvar}>
+                        onClick={e => salvarCurso(e, _id, codigo, descricao, cargaHoraria, preco, categoria)}>
                         {isAlteracao ? "Atualizar" : "Adicionar"}
                     </button>
 
@@ -91,3 +102,20 @@ export const CursoFormulario = props => {
         </div>
     )
 }
+
+const mapStoreToProps = store => ({
+    codigo: store.curso.codigo,
+    descricao: store.curso.descricao,
+    cargaHoraria: store.curso.cargaHoraria,
+    preco: store.curso.preco,
+    categoria: store.curso.categoria
+})
+
+const mapActionToProps = dispatch => bindActionCreators({
+    setInputForms,
+    limpar,
+    salvarCurso
+}, dispatch)
+
+const conectado = connect(mapStoreToProps, mapActionToProps)(CursoFormulario)
+export {conectado as CursoFormulario}
